@@ -20,6 +20,11 @@ public class ReproductorMusica {
         playlist.agregarCancion(c2);
         playlist.agregarCancion(c3);
 
-        playlist.mostrarPlaylist();
+        playlist.mostrarPlaylist();   // lista inicial con 3 canciones
+        playlist.siguiente();         // reproduce la 2
+        playlist.siguiente();         // reproduce la 3
+        playlist.anterior();          // reproduce la 2
+        playlist.eliminarActual();    // elimina la 2
+        playlist.mostrarPlaylist();   // quedan la 1 y la 3
     }
 }

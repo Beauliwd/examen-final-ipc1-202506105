@@ -51,4 +51,51 @@ public class Playlist {
     public int getTamanio() {
         return tamanio;
     }
+        public Cancion siguiente() {
+        // si no hay canción actual o ya estamos en la cola, no hay siguiente
+        if (actual == null || actual.getSiguiente() == null) {
+            return null;
+        }
+        actual = actual.getSiguiente();     // avanza el puntero
+        actual.getDato().reproducir();      // reproduce la nueva canción actual
+        return actual.getDato();
+    }
+
+    public Cancion anterior() {
+        // si no hay canción actual o ya estamos en la cabeza, no hay anterior
+        if (actual == null || actual.getAnterior() == null) {
+            return null;
+        }
+        actual = actual.getAnterior();      // retrocede el puntero
+        actual.getDato().reproducir();
+        return actual.getDato();
+    }
+
+    public void eliminarActual() {
+        if (actual == null) {               // lista vacía, nada que eliminar
+            return;
+        }
+
+        NodoDoble prev = actual.getAnterior();
+        NodoDoble next = actual.getSiguiente();
+
+        if (prev != null) {
+            prev.setSiguiente(next);        // el vecino de atrás salta al de adelante
+        } else {
+            cabeza = next;                  // era la cabeza
+        }
+
+        if (next != null) {
+            next.setAnterior(prev);         // el vecino de adelante apunta al de atrás
+        } else {
+            cola = prev;                    // era la cola
+        }
+
+        actual.setAnterior(null);           // cortamos el nodo eliminado
+        actual.setSiguiente(null);
+
+        // actual pasa al siguiente; si no hay, retrocede; si no hay ninguno, queda null
+        actual = (next != null) ? next : prev;
+        tamanio--;
+    }
 }
